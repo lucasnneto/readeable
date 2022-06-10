@@ -7,8 +7,8 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
-
-app.get("/", (req, res) => {
+app.get("/", (req, res) => res.send("hello"));
+app.get("/pdf", (req, res) => {
   // Load the docx file as binary content
   const content = fs.readFileSync(
     path.resolve(__dirname, "temp.docx"),
@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 
   docToPdf(path.resolve(__dirname, "output.docx"), path.resolve(__dirname));
   console.log("pdf criado");
-  return res.send("finish");
+  return res.sendFile(path.resolve(__dirname, "output.pdf"));
 });
 
 app.listen(port, () => {
